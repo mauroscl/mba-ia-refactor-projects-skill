@@ -1,6 +1,6 @@
-================================
-ARCHITECTURE AUDIT REPORT
-================================
+================================ 
+ARCHITECTURE AUDIT REPORT  
+================================  
 Project: code-smells-project
 Stack:   Python + Flask
 Files:   4 analyzed | ~800 lines of code

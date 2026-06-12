@@ -34,9 +34,11 @@ Seu trabalho deve ser dividido em três fases:
 
 1. **Analise**: Descobrir stack, frameworks, ferramentas de build e arquitetura utilizada. Siga "Fase 1: Instruções de analise do projeto" abaixo.
 2. **Auditoria**: Analisar o projeto e gerar um relatório de críticas classificadas de acordo com critérios de severidade (CRITICAL, HIGH, MEDIUM, LOW). Siga "Fase 2: Instruções do relatório de auditoria" abaixo.
-3. **Refatoração**: Resolver as críticas encontradas na fase 2. Se o projeto ainda não utilizar a arquitetura MVC, aproveite esta fase para refatorá-lo para este padrão. Caso já utilize corrija as issues encontradas. Siga as "Fase 3: Instruções de refatoração do projeto" abaixo.
+3. **Refatoração**: Resolver as críticas encontradas na fase 2 e transfomar o projeto no padrão arquitetural MVC, caso ainda não utilize. Siga as "Fase 3: Instruções de refatoração do projeto" abaixo.
 
 ## Fase 1: Instruções de analise do projeto
+
+Para gerar o report de análise, utilize o template [análise projeto](assets/analise-projeto-template.md) e grave no caminho `reports/analise-report.md`
 
 Faça uma análise completa dos arquivos e estruturas de diretórios. Caso a estrutura não seja de um projeto de desenvolvimento de software pare e retorne "Não foi possivel analisar o projeto". Caso contrário prossiga.
 
@@ -57,9 +59,7 @@ Exemplo para banco de dados:
 - Servidor: Oracle, Mongo, Sql Server, etc
 - Tabelas ou coleções utilizadas
 
-Se houver e apenas se for relevante para entender o projeto, inclua outras informações.
-
-Para gerar o report utilize o template [análise projeto](assets/analise-projeto-template.md) e grave no caminho `reports/analise-report.md`
+Se for relevante para entender o projeto, inclua outras informações.
 
 ### Checklist de Validação
 
@@ -70,7 +70,12 @@ Para gerar o report utilize o template [análise projeto](assets/analise-projeto
 
 **Ponto de DECISÃO**: Caso linguagem e framework detectaos não possuam um ecossistema amigável ao padrão MVC tradicional (ex: linguagens de script curtos ou funcionais puros), para e execução informando a razão de não continuar.
 
+------
+
 ## Fase 2: Instruções do relatório de auditoria
+- O relatório deve ser gerado no path `reports/audit-report.md`.
+- O relatório deve ter o formato do [template](assets/audit-report-template.md)
+- As issues devem ser ordenadas por severidade (CRITICAL → LOW)
 
 ### Definição de Severidades
 
@@ -79,7 +84,7 @@ Para gerar o report utilize o template [análise projeto](assets/analise-projeto
 - **MEDIUM:** Problemas de padronização, duplicação de código ou gargalos de performance moderada (ex: Queries N+1 no banco de dados, uso inadequado de middlewares, validações ausentes nas rotas).
 - **LOW:** Melhorias de legibilidade, nomenclatura de variáveis ruins, ou "magic numbers" soltos pelo código.
 
-### Coleta de Dados Dinâmicos (Vulnerabilidades e Depreciações)
+### Coleta de issues dinâmicas (Vulnerabilidades e Depreciações)
 
 Antes de analisar o código-fonte estaticamente, você deve inspecionar o estado das dependências e APIs utilizando as ferramentas nativas do ecossistema do projeto. Execute os comandos no terminal em modo de leitura (dry-run/audit), capture o `stdout` e `stderr`, e utilize esses logs para alimentar o seu relatório de auditoria.
 
@@ -111,30 +116,32 @@ Siga a árvore de decisão abaixo de acordo com a stack detectada na Fase 1:
 
 **Regra de Ouro:** Não modifique, instale ferramentas globais ou altere o estado da máquina hospedeira durante esta etapa de coleta. Apenas leia manifestos, invoque auditorias nativas ou capture logs de compilação.
 
-### Análise estática
+### Coleta de issues estáticas (anti-patterns)
 
-Varra todos os arquivos do projeto, incluindo as subpasta e procure por issues. Principais tipos de issues que devem ser procuradas:
+Varra todos os arquivos do projeto, incluindo as subpastas e procure por issues. Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência para procurar . O catálogo tem exemplos em várias linguagens: `Python`, `Node/Typescript`, `Java`, `C#`. Isto não significa que o tipo de issue se aplica somente à linguagem do exemplo.
 
-#### Segurança
+Principais tipos de issues que devem ser procuradas:
+
+**Segurança:**
 
 - dados sensiveis hardcoded
-- exposição de dados sensiveis em apis
+- exposição de dados sensiveis em APIs
 - log de dados sensíveis.
 - dados de senha não criptografados
 - dados criptografados com algoritmos fáceis de quebrar.
 - sql injection
 
-#### Organização de código
+**Organização de código**:
 
-- god class (muitas responsabilidades)
-- métodos muito longos
+- Classes ou métodos com muitas responsabilidades (ausência de **Single Responsibily Principle - SRP**)
+- dependência de classes concretas (ausência de injeção de dependência e inversão de controle )
+- ausência dos demais principios SOLID, quando aplicável.
 - falta de encapsulamento
 - alto acoplamento, baixa coesão.
-- dependência de classes concretas ao invés de interfaces
-- nomes de variáveis sem semantica (letras soltas, abreviaturas que nao indicam a intencao)
-- repetição de código
+- nomes de variáveis, métodos, classes sem semântica (letras soltas, abreviaturas que nao indicam a intencao)
+- repetição de código (ausência do principio **Don't Repeat Youserlf - DRY**)
 
-#### Padrões
+**Padrões:**
 
 - ausencia de padrão MVC
 - falta de padrão repository para acesso à banco de dados
@@ -143,10 +150,7 @@ Varra todos os arquivos do projeto, incluindo as subpasta e procure por issues. 
   - implicito: quando estiver utilizando ORM
   - explicito: quando estiver utilizando query em loop
 
-### Report
-
-O relatório deve ser gerado no path `reports/audit-report.md`.
-O relatório deve ter o formato do [template](assets/audit-report-template.md)
+Você pode e deve reportar outras issues que forem encontradas e não estejam no catálogo.  
 
 ### Checklist de Validação
 
@@ -157,7 +161,11 @@ O relatório deve ter o formato do [template](assets/audit-report-template.md)
 - [ ] Ferramenta nativa de auditoria (ex: npm audit) ou verificação estática de manifesto (OSV) executada com sucesso.
 - [ ] Logs de build/linter capturados e analisados em busca de APIs obsoletas.
 
+------
+
 ## Fase 3: Instruções de refatoração do projeto
+
+Nesta fase vamos resolver as issues encontradas na fase e refatorar o projeto para o padrão MVC, caso ainda não esteja nesta padrão.
 
 ### Instruções de fluxo
 
@@ -167,13 +175,15 @@ Pergunte ao usuário "Deseja prosseguir com a refatoração para o padrão MVC?"
 - Em caso positivo, prossiga.
 
 ### Estrutura do projeto
+- A estrutura do projeto deve seguir o [template](assets/template-projeto-mvc.md)
+- Jamais altere a linguagem original do projeto. 
+- Somente altere o framework principal do projeto se ele não for amigável ao padrão MVC. 
+- Faça as refatorações necessárias. Você tem liberdade para incluir novas dependência que entender necessário para implementar as refatorações
 
-Jamais altere a linguagem ou o framework do projeto. Apenas altere a estrutura e faça as refatorações. A estrutura deve seguir o [template](assets/template-projeto-mvc.md)
+### Anti-patterns
 
-### Antipatterns
-
-Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência para resolver as issues. O catálogo tem exemplos em várias linguagens: Python, Node/Typescript, Java, C#. Isto não significa que o exemplo se aplica somente à linguagem do exemplo. Apresentamos exemplos em várias linguagens para termos mais variedades, já que somos agnósticos à tecnologia. Caso o exemplo do anti-pattern esteja em um projeto de uma linguagem/framework diferente do exemplo, adapte.  
-Caso encontre anti-patterns que não estejam no catálogo pode refatorá-los.
+Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência para resolver as issues encontradas. O catálogo tem exemplos em várias linguagens: Python, Node/Typescript, Java, C#. Isto não significa que o exemplo se aplica somente à linguagem do exemplo. Apresentamos exemplos em várias linguagens para termos mais variedades, já que somos agnósticos à tecnologia. Caso o exemplo do anti-pattern esteja em um projeto de uma linguagem/framework diferente do exemplo, adapte.  
+Caso encontre anti-patterns que não estejam no catálogo você também pode refatorá-los.
 
 ### Passo a passo da refatoração
 
