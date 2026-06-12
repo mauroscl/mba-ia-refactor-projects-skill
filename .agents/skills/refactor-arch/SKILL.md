@@ -189,6 +189,12 @@ Pergunte ao usuário "Deseja prosseguir com a refatoração para o padrão MVC?"
 Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência para resolver as issues encontradas. O catálogo tem exemplos em várias linguagens: Python, Node/Typescript, Java, C#. Isto não significa que o exemplo se aplica somente à linguagem do exemplo. Apresentamos exemplos em várias linguagens para termos mais variedades, já que somos agnósticos à tecnologia. Caso o exemplo do anti-pattern esteja em um projeto de uma linguagem/framework diferente do exemplo, adapte.  
 Caso encontre anti-patterns que não estejam no catálogo você também pode refatorá-los.
 
+### Persistência de Dados (Banco de Dados)
+-**Uso preferencial de ORM:** Ao refatorar a camada de acesso a dados (Repositories/Models), você **DEVE**
+introduzir e configurar um framework de ORM padrão da stack do projeto (ex: SQLAlchemy para Python, Prisma/TypeORM para Node.js, Entity Framework para C#, Hibernate para Java).
+- É estritamente proibido utilizar bibliotecas de *raw SQL* puro (ex: `sqlite3`, `pg`, `mysql2` puras)para operações de CRUD, a menos que seja estritamente necessário para uma query analítica muito complexa ou o framework não ofereça alternativa.
+- Configure a conexão do ORM isolada no arquivo/módulo de configuração e injete nos repositórios.
+
 ### Passo a passo da refatoração
 
 A partir da classificação das issues encontradas na fase 2 comece refatorando pelas issues na seguinte ordem: CRITICAL, HIGH, MEDIUM, LOW.  
