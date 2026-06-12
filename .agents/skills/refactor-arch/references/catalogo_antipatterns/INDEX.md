@@ -14,7 +14,7 @@ Este catálogo serve como um guia de referência completo para identificação, 
 * [Deprecated Depencies](seguranca/dependencies_deprecated.md) (**Node/Typescript**)
 
 ### 2. Organização de Código
-* [God Class (Muitas Responsabilidades)](organizacao/god_class.md) (**C#**)
+* [god class / files](organizacao/god_class.md) (**C#**)
 * [Métodos Muito Longos](organizacao/metodos_longos.md) (**Node/TypeScript**)
 * [Falta de Encapsulamento](organizacao/falta_encapsulamento.md) (**Java**)
 * [Alto Acoplamento e Baixa Coesão](organizacao/acoplamento_coesao.md) (**Python**)
@@ -22,6 +22,8 @@ Este catálogo serve como um guia de referência completo para identificação, 
 * [Nomes de Variáveis Sem Semântica](organizacao/nomes_sem_semantica.md) (**Node/TypeScript**)
 * [Repetição de Código (DRY Violation)](organizacao/repeticao_codigo.md) (**Java**)
 * [Números e Strings mágicas](organizacao/numeros_strings_magicas.md) (**Java**)
+* [Obsessão por tipos primitivos](organizacao/obsessao_primitivos_parametro.md) (**Java**)
+* [Tipagem fraca](organizacao/multiplas_classes_tipagem_fraca.md) (**Java**)
 
 ### 3. Padrões de Projeto e Arquitetura
 * [Ausência do Padrão MVC](padroes/ausencia_mvc.md) (**Python**)

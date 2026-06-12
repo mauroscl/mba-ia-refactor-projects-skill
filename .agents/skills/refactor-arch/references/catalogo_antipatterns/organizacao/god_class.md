@@ -3,7 +3,7 @@
 
 ## Descrição
 Descrição
-Uma única classe assume múltiplos papéis e responsabilidades distintas dentro do sistema (violação do Single Responsibility Principle - SRP). Elas se tornam gigantescas, com alto acoplamento interno e difíceis de testar isoladamente.
+Uma única classe ou arquivo assume múltiplos papéis e responsabilidades distintas dentro do sistema (violação do Single Responsibility Principle - SRP). Elas se tornam gigantescas, com alto acoplamento interno e difíceis de testar isoladamente.
 
 ## Como NÃO Fazer
 ```csharp

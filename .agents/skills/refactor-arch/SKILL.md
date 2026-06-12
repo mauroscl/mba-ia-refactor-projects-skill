@@ -118,7 +118,7 @@ Siga a árvore de decisão abaixo de acordo com a stack detectada na Fase 1:
 
 ### Coleta de issues estáticas (anti-patterns)
 
-Varra todos os arquivos do projeto, incluindo as subpastas e procure por issues. Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência para procurar . O catálogo tem exemplos em várias linguagens: `Python`, `Node/Typescript`, `Java`, `C#`. Isto não significa que o tipo de issue se aplica somente à linguagem do exemplo.
+Varra todos os arquivos do projeto, incluindo as subpastas e procure por problemas. Utilize o [catalogo de anti-patterns](references/catalogo_antipatterns/INDEX.md) como referência. O catálogo tem exemplos em várias linguagens: `Python`, `Node/Typescript`, `Java`, `C#` e cada exemplo do catálogo foi escrito em uma dessas linguagens. Isto não significa que o tipo de issue se aplica somente à linguagem em que o exemplo foi escrito. As issues do catálogo se aplicam à todas as linguagens e frameworks.
 
 Principais tipos de issues que devem ser procuradas:
 
@@ -133,7 +133,11 @@ Principais tipos de issues que devem ser procuradas:
 
 **Organização de código**:
 
-- Classes ou métodos com muitas responsabilidades (ausência de **Single Responsibily Principle - SRP**)
+- god class / god files: arquivos e/ou classes com muitas responsabilidades (não adoção do principio SOLID **Single Responsibily Principle - SRP**)
+- classes de dominios diferentes no mesmo arquivo
+- tipagem fraca (ausência de tipos ou uso do tipo `any`, `object` em linguagens que suportam tipagem estática)
+- métodos muito longos: geram muita complexidade e devem ser quebrados em métodos menores ou outras classes (não adoção do principio SOLID **SRP**)
+- obsessão por tipos primitivos e long parameter list: quando uma função tem muitos parâmetros, principalmente se forem tipos primitivos (string, number, boolean), isso é um sinal de que os dados estão mal estruturados e deveriam ser encapsulados em objetos ou classes de domínio.
 - dependência de classes concretas (ausência de injeção de dependência e inversão de controle )
 - ausência dos demais principios SOLID, quando aplicável.
 - falta de encapsulamento
