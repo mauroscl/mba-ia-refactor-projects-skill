@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Loja E-commerce API (MVC Refactored)
+  description: API refatorada utilizando padrão MVC, Dependency Injection e SQLAlchemy
+  version: 1.0.0
+servers:
+  - url: http://localhost:5001
+paths:
+  /produtos:
+    get:
+      summary: Listar produtos
+      tags: [Produtos]
+      responses:
+        '200':
+          description: Sucesso
+    post:
+      summary: Criar produto
+      tags: [Produtos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome: { type: string }
+                preco: { type: number }
+                estoque: { type: integer }
+                categoria: { type: string }
+      responses:
+        '201':
+          description: Criado
+  /produtos/{id}:
+    get:
+      summary: Buscar produto por ID
+      tags: [Produtos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Sucesso
+    put:
+      summary: Atualizar produto
+      tags: [Produtos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome: { type: string }
+                preco: { type: number }
+                estoque: { type: integer }
+      responses:
+        '200':
+          description: Sucesso
+    delete:
+      summary: Deletar produto
+      tags: [Produtos]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Sucesso
+  /usuarios:
+    get:
+      summary: Listar usuários
+      tags: [Usuários]
+      responses:
+        '200':
+          description: Sucesso
+    post:
+      summary: Criar usuário
+      tags: [Usuários]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome: { type: string }
+                email: { type: string }
+                senha: { type: string }
+      responses:
+        '201':
+          description: Criado
+  /login:
+    post:
+      summary: Login de usuário
+      tags: [Usuários]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                senha: { type: string }
+      responses:
+        '200':
+          description: Sucesso
+        '401':
+          description: Não autorizado
+  /pedidos:
+    post:
+      summary: Criar pedido
+      tags: [Pedidos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usuario_id: { type: integer }
+                itens:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      produto_id: { type: integer }
+                      quantidade: { type: integer }
+      responses:
+        '201':
+          description: Criado
+    get:
+      summary: Listar todos os pedidos
+      tags: [Pedidos]
+      responses:
+        '200':
+          description: Sucesso
+  /pedidos/usuario/{usuario_id}:
+    get:
+      summary: Listar pedidos por usuário
+      tags: [Pedidos]
+      parameters:
+        - in: path
+          name: usuario_id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Sucesso
+  /pedidos/{pedido_id}/status:
+    put:
+      summary: Atualizar status do pedido
+      tags: [Pedidos]
+      parameters:
+        - in: path
+          name: pedido_id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { type: string }
+      responses:
+        '200':
+          description: Sucesso
+  /relatorios/vendas:
+    get:
+      summary: Relatório de vendas
+      tags: [Relatórios]
+      responses:
+        '200':
+          description: Sucesso
