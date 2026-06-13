@@ -193,6 +193,15 @@ introduzir e configurar um framework de ORM padrão ou um Query Builder robusto 
 - É estritamente proibido utilizar bibliotecas de *raw SQL* puro (ex: `sqlite3`, `pg`, `mysql2` puras)para operações de CRUD, a menos que seja estritamente necessário para uma query analítica muito complexa ou o framework não ofereça alternativa.
 - Configure a conexão do ORM isolada no arquivo/módulo de configuração e injete nos repositórios.
 
+### Injeção de Dependência Obrigatória (DI/IoC)
+- É **obrigatório** o uso de Injeção de Dependência (DI) em todas as camadas (Controllers dependem de Services injetados; Services
+     dependem de Repositories injetados).
+- **PROIBIDO** instanciar classes concretas de serviços ou repositórios usando a palavra-chave `new` ou invocando construtores
+     diretamente (ex: `self.repo = ProdutoRepository()`).
+- Se o framework não possuir um container IoC nativo (como é o caso do Flask ou Express), você **DEVE** instalar uma biblioteca de
+     container (ex: `dependency-injector` no Python, `tsyringe` ou `awilix` no Node/TypeScript) e criar um arquivo de container
+     centralizado para gerenciar a resolução e injeção dessas classes via construtor ou decorators.
+
 ### Documentação de APIs (Padrão OpenAPI 3.0)
 
 Sempre que o projeto possuir endpoints de API (Controllers ou Rotas), você deve garantir que eles sejam documentados utilizando a especificação OpenAPI 3.0. 
@@ -251,8 +260,11 @@ Se após 3 tentativas os testes continuarem falhando, reverta a alteração e no
 - [ ] Models criados para abstrair dados
 - [ ] Views/Routes separadas para visualização ou roteamento
 - [ ] Controllers concentram o fluxo da aplicação
+- [ ] Injeção de Dependência implementada (sem instâncias diretas de Services/Repositories escondidas nos construtores).
+- [ ] Container de IoC configurado, caso a linguagem não tenha suporte nativo.
 - [ ] Error handling centralizado
 - [ ] Entry point claro
+- [ ] Documentação OpenAPI 3.0 gerada (via anotações no código ou arquivo `openapi.yaml` na raiz).
 - [ ] Aplicação inicia sem erros
 - [ ] Endpoints originais respondem corretamente
 - [ ] Arquivo de dependências configurado com sucesso
