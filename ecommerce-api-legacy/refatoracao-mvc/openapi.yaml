@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: E-commerce Legacy Refactored API
+  version: 1.0.0
+  description: API refatorada para a estrutura MVC.
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor Local
+
+paths:
+  /checkout:
+    post:
+      summary: Realiza o checkout de um curso.
+      tags:
+        - Checkout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - usr
+                - eml
+                - c_id
+                - card
+              properties:
+                usr:
+                  type: string
+                  description: Nome do usuário
+                eml:
+                  type: string
+                  description: E-mail do usuário
+                pwd:
+                  type: string
+                  description: Senha do usuário
+                c_id:
+                  type: integer
+                  description: ID do curso
+                card:
+                  type: string
+                  description: Número do cartão de crédito
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                  enrollment_id:
+                    type: integer
+        '400':
+          description: Bad Request ou Pagamento Recusado
+        '404':
+          description: Curso não encontrado
+        '500':
+          description: Erro interno
+
+  /admin/financial-report:
+    get:
+      summary: Retorna o relatório financeiro de vendas dos cursos.
+      tags:
+        - Relatórios
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    course:
+                      type: string
+                    revenue:
+                      type: number
+                    students:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          student:
+                            type: string
+                          paid:
+                            type: number
+        '500':
+          description: Erro interno
+
+  /users/{id}:
+    delete:
+      summary: Deleta um usuário.
+      tags:
+        - Usuários
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuário deletado
+        '404':
+          description: Usuário não encontrado
+        '500':
+          description: Erro interno
