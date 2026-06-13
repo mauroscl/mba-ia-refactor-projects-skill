@@ -144,6 +144,7 @@ Principais tipos de findings que devem ser procurados:
 - dependência de classes concretas (dependa de abstrações sempre que possivel e utilize um container de injeção de dependência para resolver as dependências)
 - ausência dos demais principios SOLID, quando aplicável.
 - falta de encapsulamento
+- dominios anêmicos (classes que possuem apenas atributos e não possuem comportamentos, ou seja, não possuem métodos ou possuem métodos muito simples que não fazem nada além de getters e setters)
 - alto acoplamento, baixa coesão.
 - nomes de variáveis, métodos, classes sem semântica (letras soltas, abreviaturas que nao indicam a intencao)
 - repetição de código (ausência do principio **Don't Repeat Youserlf - DRY**)
@@ -204,7 +205,7 @@ introduzir e configurar um framework de ORM padrão ou um Query Builder robusto 
 
 ### Documentação de APIs (Padrão OpenAPI 3.0)
 
-Sempre que o projeto possuir endpoints de API (Controllers ou Rotas), você deve garantir que eles sejam documentados utilizando a especificação OpenAPI 3.0. 
+Sempre que o projeto possuir endpoints de API (Controllers ou Rotas), você deve garantir que eles sejam documentados utilizando a especificação OpenAPI 3.0. Sempre inclua a biblioteca swagger-ui adequada à linguagem e exponha a especificação gerada na rota `/swagger-ui`.
 
 Para manter o comportamento agnóstico e respeitar a cultura de cada framework, aplique a seguinte estratégia de decisão:
 

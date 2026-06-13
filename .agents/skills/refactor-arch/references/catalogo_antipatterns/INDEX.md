@@ -17,6 +17,7 @@ Este catálogo serve como um guia de referência completo para identificação, 
 * [god class / files](organizacao/god_class.md) (**C#**)
 * [Métodos Muito Longos](organizacao/metodos_longos.md) (**Node/TypeScript**)
 * [Falta de Encapsulamento](organizacao/falta_encapsulamento.md) (**Java**)
+* [Dominio Anêmico](organizacao/dominio_anemico.md) (**Node/TypeScript**)
 * [Alto Acoplamento e Baixa Coesão](organizacao/acoplamento_coesao.md) (**Python**)
 * [Dependência de Classes Concretas](organizacao/dependencia_concreta.md) (**C#**)
 * [Nomes de Variáveis Sem Semântica](organizacao/nomes_sem_semantica.md) (**Node/TypeScript**)
