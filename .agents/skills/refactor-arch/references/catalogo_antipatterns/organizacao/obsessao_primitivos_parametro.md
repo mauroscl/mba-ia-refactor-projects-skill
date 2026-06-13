@@ -2,7 +2,7 @@
 **Linguagem de Exemplo:** Node.js / TypeScript
 
 ## Descrição
-Ocorre quando o sistema utiliza tipos básicos da linguagem (strings, números, booleanos) para representar conceitos de domínio que deveriam ser objetos, resultando em funções procedurais com listas gigantescas de parâmetros. Isso destrói o encapsulamento, facilita a troca acidental da ordem dos argumentos e impede a validação isolada dos dados.
+Ocorre quando o sistema utiliza tipos básicos da linguagem (strings, números, booleanos) para representar conceitos de domínio que deveriam ser objetos, resultando em funções procedurais com listas gigantescas de parâmetros. Isso destrói o encapsulamento, facilita a troca acidental da ordem dos argumentos e impede a validação isolada dos dados. Deve ser evitado também o uso excessivo de métodos estáticos e variáveis globais.
 
 ## Como NÃO Fazer
 ```typescript
