@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Task Manager API
+  description: API refatorada para o padrão MVC
+  version: 2.0.0
+servers:
+  - url: http://localhost:5000
+    description: Servidor de desenvolvimento
+paths:
+  /health:
+    get:
+      summary: Retorna o status de saúde da API
+      responses:
+        '200':
+          description: Status ok
+  /tasks:
+    get:
+      summary: Lista todas as tarefas
+      responses:
+        '200':
+          description: Sucesso
+    post:
+      summary: Cria uma nova tarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Tarefa criada
+  /tasks/{id}:
+    get:
+      summary: Busca tarefa por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+    put:
+      summary: Atualiza uma tarefa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+      responses:
+        '200':
+          description: Tarefa atualizada
+    delete:
+      summary: Deleta tarefa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarefa deletada
+  /users:
+    get:
+      summary: Lista usuários
+      responses:
+        '200':
+          description: Sucesso
+    post:
+      summary: Cria usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Usuário criado
