@@ -1,0 +1,12 @@
+================================
+PHASE 1: PROJECT ANALYSIS
+================================
+Language:      Python
+Framework:      Flask 3.1.1
+Dependência/Build: pip
+Dependencies:  flask-cors
+Domain:        E-commerce API (produtos, pedidos, usuários)
+Architecture:  Monolítica — tudo em 4 arquivos, sem separação de camadas
+Source files:  4 files analyzed
+DB tables:     produtos, usuarios, pedidos, itens_pedido
+================================
