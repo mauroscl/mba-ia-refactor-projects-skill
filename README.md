@@ -24,26 +24,28 @@ Antes do desenvolvimento da skill, foi realizada uma auditoria manual nos três 
 *   **CRITICAL**: Exposição de segredos: chaves de API de pagamento e segredos de gateway estão hardcoded no código.
 *   **CRITICAL**: Falha grave de segurança: as senhas são persistidas com algoritmos de hash caseiros e ineficazes (`badCrypto`).
 *   **CRITICAL**: Vazamento de dados sensíveis: informações como números de cartão de crédito são registradas em logs abertos.
-*   **HIGH**: "God Object": a classe `AppManager.js` concentra responsabilidades de banco de dados, roteamento e lógica de checkout.
+*   **CRITICAL**: "God Object": a classe `AppManager.js` concentra responsabilidades de banco de dados, roteamento e lógica de checkout, violando gravemente a separação de responsabilidades.
 *   **HIGH**: Negligência arquitetural: lógicas de persistência e negócio misturadas diretamente nos arquivos de definição de rotas.
 *   **HIGH**: Complexidade técnica (Callback Hell): aninhamento excessivo de callbacks dificultando a leitura e tratamento de erros.
-*   **HIGH**: Eficiência de Banco de Dados: o endpoint de relatórios financeiros executa múltiplas consultas individuais (problema N+1) em loops.
+*   **MEDIUM**: Eficiência de Banco de Dados: o endpoint de relatórios financeiros executa múltiplas consultas individuais (problema N+1) em loops.
 *   **MEDIUM**: Falta de validação de Schema: payloads de entrada não são validados antes da inserção no banco de dados.
 *   **MEDIUM**: Gerenciamento de estado precário: variáveis globais soltas sem encapsulamento em objetos de serviço ou repositório.
 *   **MEDIUM**: Inconsistência de deleção: remoção de usuários sem o devido tratamento de dados órfãos em matrículas e pagamentos.
 *   **MEDIUM**: Tratamento de erro deficiente: respostas genéricas ("Erro DB") que dificultam o diagnóstico em produção.
 *   **LOW**: Nomenclatura não semântica: variáveis com nomes genéricos (ex: `u`, `e`, `p`).
+*   **LOW**: Rastreabilidade ineficiente: uso de `console.log` para logs de sistema e depuração em vez de uma biblioteca de logging estruturada.
 
 ### 3. task-manager-api (Python/Flask)
 *   **CRITICAL**: Segurança de credenciais: a senha do usuário é exposta no payload de métodos GET.
 *   **CRITICAL**: Armazenamento vulnerável: uso do algoritmo `md5` para armazenamento de senhas e segredos SMTP hardcoded.
-*   **HIGH**: APIs Deprecated: dependência direta do método `utcnow()`, marcado como obsoleto no Python moderno.
-*   **HIGH**: Performance (Select N+1): listagem de tarefas dispara consultas individuais para cada categoria associada.
-*   **HIGH**: Monolito Funcional: toda a lógica de negócio e validação reside na camada de `routes/`.
+*   **HIGH**: Negligência Arquitetural: toda a lógica de negócio e validação reside na camada de `routes/`.
+*   **MEDIUM**: APIs Deprecated: dependência direta do método `utcnow()`, marcado como obsoleto no Python moderno.
+*   **MEDIUM**: Performance (Select N+1): listagem de tarefas dispara consultas individuais para cada categoria associada.
 *   **MEDIUM**: Violação de DRY (Don't Repeat Yourself): a regra de cálculo de tarefas atrasadas (`overdue`) está replicada em 5 arquivos diferentes.
 *   **MEDIUM**: Falta de Agregação no Banco: estatísticas de tarefas são geradas via múltiplas queries em vez de queries agregadas (COUNT/GROUP BY).
 *   **MEDIUM**: UX de API: falta de mecanismos de paginação e filtros nativos em endpoints de listagem.
 *   **LOW**: Responsabilidade Deslocada: codificação de senhas é realizada na lógica de roteamento em vez de no modelo/serviço.
+*   **LOW**: Strings hardcoded: Caminho do banco de dados e metadados da API (versão) fixos no código principal.
 
 ---
 
